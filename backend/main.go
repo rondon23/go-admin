@@ -1,27 +1,17 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	"github.com/rondon23/go-admin/database"
+	"github.com/rondon23/go-admin/routes"
 )
 
 func main() {
-	db, err := gorm.Open(mysql.Open("developer:1234567@/go_admin"), &gorm.Config{})
-
-	if err != nil {
-		panic("Could not connect to the database")
-	}
-
-	fmt.Println(db)
+	database.Connect()
 
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World 👋!")
-	})
+	routes.Setup(app)
 
 	app.Listen(":8000")
 }
