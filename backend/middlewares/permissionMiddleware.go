@@ -31,16 +31,16 @@ func IsAuthorized(c *fiber.Ctx, page string) error {
 		Id: user.RoleId,
 	}
 
-	database.DB.Preload("Permission").Find(&role)
+	database.DB.Preload("Permissions").Find(&role)
 
 	if c.Method() == "GET" {
-		for _, permission := range role.Permission {
+		for _, permission := range role.Permissions {
 			if permission.Name == "view_"+page || permission.Name == "edit_"+page {
 				return nil
 			}
 		}
 	} else {
-		for _, permission := range role.Permission {
+		for _, permission := range role.Permissions {
 			if permission.Name == "edit_"+page {
 				return nil
 			}
