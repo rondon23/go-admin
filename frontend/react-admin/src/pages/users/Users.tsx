@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Component, useEffect, useState } from "react";
 import Wrapper from "../../components/Wrapper";
+import { User } from "../../models/user";
 
 const Users = () => {
     const [users, setUsers] = useState([])
@@ -10,7 +11,7 @@ const Users = () => {
             async () => {
                 const { data } = await axios.get('users');
 
-                console.log(data);
+                setUsers(data.data);
             }
         )()
     }, [])
@@ -23,20 +24,24 @@ const Users = () => {
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Header</th>
-                                <th scope="col">Header</th>
-                                <th scope="col">Header</th>
-                                <th scope="col">Header</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1,001</td>
-                                <td>random</td>
-                                <td>data</td>
-                                <td>placeholder</td>
-                                <td>text</td>
-                            </tr>
+                            {users.map((user: User) => {
+                                return (
+                                    <tr key={user.id}>
+                                        <td>{user.id}</td>
+                                        <td>{user.first_name} {user.last_name}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.role.name}</td>
+                                        <td>{}</td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </div>
