@@ -4,17 +4,30 @@ import Wrapper from "../../components/Wrapper";
 import { User } from "../../models/user";
 
 const Users = () => {
-    const [users, setUsers] = useState([])
+    const [users, setUsers] = useState([]);
+    const [page, setPage] = useState(1);
+    const [lastPage, setLastPage] = useState(0);
 
     useEffect(() => {
         (
             async () => {
-                const { data } = await axios.get('users');
+                const { data } = await axios.get(`users?page=${page}`);
 
                 setUsers(data.data);
+                setLastPage(data.meta.last_page);
             }
         )()
-    }, [])
+    }, [page])
+
+    const next = () => {
+        setPage(page + 1)
+    }
+
+    const prev = () => {
+        if (page >= 1) {
+            setPage(page - 1);
+        }
+    }
 
     return (
         <Wrapper>
@@ -38,7 +51,7 @@ const Users = () => {
                                         <td>{user.first_name} {user.last_name}</td>
                                         <td>{user.email}</td>
                                         <td>{user.role.name}</td>
-                                        <td>{}</td>
+                                        <td>{ }</td>
                                     </tr>
                                 )
                             })}
@@ -46,6 +59,17 @@ const Users = () => {
                     </table>
                 </div>
             </div>
+
+            <nav>
+                <ul className="pagination">
+                    <li className="page-item">
+                        <a href="#" className="page-link" onClick={prev}>Previous</a>
+                    </li>
+                    <li className="page-item">
+                        <a href="#" className="page-link" onClick={next} >Next</a>
+                    </li>
+                </ul>
+            </nav>
         </Wrapper>
     );
 }
