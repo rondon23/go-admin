@@ -33,6 +33,10 @@ const Products = () => {
 
     return (
         <Wrapper>
+            <div className="pt-3 pb-2 mb-3 border-bottom">
+                <Link to='/products/create' className="btn btn-sm btn-outline-secondary">Add</Link>
+            </div>
+
             <div className="table-responsive">
                 <table className="table table-striped table-sm">
                     <thead>
@@ -70,7 +74,7 @@ const Products = () => {
                 </table>
             </div>
 
-            <Paginator lastPage={lastPage} pageChanged={setPage} page={page}/>
+            <Paginator lastPage={lastPage} pageChanged={setPage} page={page} />
         </Wrapper>
     );
 };
