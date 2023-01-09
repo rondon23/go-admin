@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component, useEffect, useState } from 'react'
+import { blob } from 'stream/consumers';
 import Paginator from '../../components/Paginator';
 import Wrapper from '../../components/Wrapper';
 import { Order } from '../../models/order';
@@ -36,8 +37,22 @@ const Orders = () => {
         setSelected(selected !== id ? id : 0);
     }
 
+    const handlExport = async () => {
+        const {data} = await axios.post('export', {}, {responseType: 'blob'});
+        const blob = new Blob([data], {type: 'text/csv'});
+        const url = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'orders.csv';
+        link.click();
+    }
+
     return (
         <Wrapper>
+              <div className="pt-3 pb-2 mb-3 border-bottom">
+                <a href='#' className="btn btn-sm btn-outline-secondary" onClick={handlExport}>Export</a>
+            </div>
+
             <div className="table-responsive">
                 <table className="table table-sm">
                     <thead>
