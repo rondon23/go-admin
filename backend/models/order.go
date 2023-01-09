@@ -3,7 +3,6 @@ package models
 import "gorm.io/gorm"
 
 type Order struct {
-	gorm.Model
 	Id         uint        `json:"id"`
 	FirstName  string      `json:"-"`
 	LastName   string      `json:"-"`

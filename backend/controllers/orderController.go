@@ -48,7 +48,7 @@ func CrateFile(filePath string) error {
 
 	for _, order := range orders {
 		data := []string{
-			strconv.Itoa(int(order.ID)),
+			strconv.Itoa(int(order.Id)),
 			order.FirstName + " " + order.LastName,
 			order.Email,
 			"",
